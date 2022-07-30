@@ -3,6 +3,22 @@ $(document).ready(function(){
     $("#currentDay").text(today)
 });
 
+function currentTime() {
+    let thisHour = parseInt(moment(new Date()).format('H'));
+    $('.row').each(function(i) {
+        let rowHour = $(this).data('hour');
+        if(thisHour > rowHour) {
+            $(':nth-child(2)', this).toggleClass('past');
+        }
+        else if (thisHour === rowHour) {
+            $(':nth-child(2)', this).toggleClass('present');
+        }
+        else if(thisHour < rowHour) {
+            $(':nth-child(2)', this).toggleClass('future');
+        }
+    })
+}
+
 $('.description').click(function() {
     let thisTask = $('p', this);
     let taskText = thisTask.text().trim();
@@ -21,4 +37,6 @@ $('.row').on('mouseleave', 'input', function() {
     let pElement = $('<p>').text(userTask);
     thisTask.replaceWith(pElement);
 });
+
+currentTime();
 
